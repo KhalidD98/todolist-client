@@ -26,7 +26,6 @@ const useStyles = makeStyles({
         backdropFilter: 'blur( 7px )',
         webkitBackdropFilter: 'blur( 7px )',
         color: 'white',
-        width: '60%',
         height: '4.5rem',
         display: 'flex',
         flexDirection: 'row',
@@ -39,18 +38,32 @@ const useStyles = makeStyles({
         marginBottom: '0.8rem',
         flexShrink: '0',
         animation: 'fadeIn .4s ease-in-out',
+        ['@media (max-width:800px)']: { // Small Screen
+            width: '60%',
+            marginRight: '3rem',
+            marginLeft: '3rem',
+        },
+        ['@media (min-width:800px)']: { // Large Screen
+            width: '35%',
+        },
     },
     taskText: {
         paddingRight: '1rem',
         paddingLeft: '2rem',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
         overflow: 'hidden',
-        maxWidth: '200px',
+        maxWidth: '60%',
+        ['@media (max-width:780px)']: { // Small Screen
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+        },
+        ['@media (min-width:780px)']: { // Large Screen
+            wordWrap: 'break-word',
+        },
     },
     editIcon: {
         paddingRight: '1rem',
         paddingLeft: '1rem',
+        cursor: 'pointer'
     },
 });
 
@@ -67,8 +80,8 @@ export default function TaskList({ editTask, deleteTask, updateCompleteStatus, l
         }).map((val, key) => {
             return <div className={classes.tasks} key={val.id}>
                 {val.completed
-                    ? <CheckBoxIcon sx={{ color: grey[300] }} onClick={() => updateCompleteStatus(val.id, val.completed)} />
-                    : <CheckBoxOutlineBlankIcon onClick={() => updateCompleteStatus(val.id, val.completed)} />
+                    ? <CheckBoxIcon sx={{ color: grey[300], cursor: 'pointer' }} onClick={() => updateCompleteStatus(val.id, val.completed)} />
+                    : <CheckBoxOutlineBlankIcon sx={{ cursor: 'pointer' }} onClick={() => updateCompleteStatus(val.id, val.completed)} />
                 }
                 {val.completed
                     ? <Typography style={{ textDecorationColor: '#C8C8C8', textDecoration: 'line-through', color: '#D3D3D3' }} className={classes.taskText}>{val.task}</Typography>
@@ -77,7 +90,7 @@ export default function TaskList({ editTask, deleteTask, updateCompleteStatus, l
                 <div className={classes.editIcon}>
                     <EditTask editTask={editTask} id={val.id} oldTask={val.task} />
                 </div>
-                <DeleteIcon onClick={() => deleteTask(val.id)} />
+                <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => deleteTask(val.id)} />
             </div>
         })
     )

@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { makeStyles } from '@mui/styles'
 import EditIcon from '@mui/icons-material/Edit';
-import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 
 const style = { // Style of modal
@@ -46,7 +45,7 @@ export default function EditTask({ editTask, id, oldTask }) {
 
     return (
         <div>
-            <EditIcon className={classes.editTaskButton} onClick={handleOpen} className={classes.editIcon} />
+            <EditIcon className={classes.editTaskButton} onClick={handleOpen} />
             <Modal
                 keepMounted
                 open={open}
@@ -57,6 +56,7 @@ export default function EditTask({ editTask, id, oldTask }) {
                 <Box sx={style}>
                     <Input
                         sx={{ marginBottom: '2rem' }}
+                        inputProps={{ maxLength: 30 }}
                         onChange={(event) => { setTask(event.target.value); }}
                         placeholder={oldTask}
                         variant="outlined"
